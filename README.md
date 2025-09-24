@@ -1,0 +1,1 @@
+# proyecto_II_trading
