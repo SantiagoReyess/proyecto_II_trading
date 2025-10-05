@@ -15,5 +15,5 @@ def main():
     return print(dataframe)
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     main()

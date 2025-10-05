@@ -8,17 +8,20 @@ def calculate_signals(dataframe,
     dataframe = dataframe.copy()
 
     # RSI
-    dataframe["RSI"] = ta.momentum.RSIIndicator(close=dataframe["Close"], window=rsi_window)
+    dataframe["RSI"] = ta.momentum.RSIIndicator(close=dataframe["Close"], window=rsi_window).rsi()
     ## Evaluate RSI
-    if dataframe["RSI"] < rsi_lower:
-        dataframe["Buy RSI"] = 1
-    else:
-        dataframe["Buy RSI"] = 0
+    dataframe["Buy RSI"] = dataframe["RSI"] < rsi_lower
+    dataframe["Sell RSI"] = dataframe["RSI"] > rsi_upper
 
-    if dataframe["RSI"] > rsi_upper:
-        dataframe["Sell RSI"] = 1
-    else:
-        dataframe["Sell RSI"] = 0
+    #if dataframe["RSI"] < float(rsi_lower):
+     #   dataframe["Buy RSI"] = 1
+    #else:
+     #   dataframe["Buy RSI"] = 0
+
+    #if dataframe["RSI"] > rsi_upper:
+     #   dataframe["Sell RSI"] = 1
+    #else:
+     #   dataframe["Sell RSI"] = 0
 
     # MACD
     macd = ta.trend.MACD(close=dataframe["Close"], window_slow=macd_window_slow, window_fast=macd_window_fast, window_sign=macd_window_sign)
@@ -27,15 +30,18 @@ def calculate_signals(dataframe,
     dataframe["MACD_Hist"] = macd.macd_diff()
 
     ## Evaluate MACD
-    if dataframe["MACD"] > dataframe["MACD_Signal"]:
-        dataframe["Buy MACD"] = 1
-    else:
-        dataframe["Buy MACD"] = 0
+    dataframe["Buy MACD"] = dataframe["MACD"] > dataframe["MACD_Signal"]
+    dataframe["Sell MACD"] = dataframe["MACD"] < dataframe["MACD_Signal"]
 
-    if dataframe["MACD"] < dataframe["MACD_Signal"]:
-        dataframe["Sell MACD"] = 1
-    else:
-        dataframe["Sell MACD"] = 0
+    #if dataframe["MACD"] > dataframe["MACD_Signal"]:
+    #    dataframe["Buy MACD"] = 1
+    #else:
+    #    dataframe["Buy MACD"] = 0
+
+    #if dataframe["MACD"] < dataframe["MACD_Signal"]:
+    #    dataframe["Sell MACD"] = 1
+    #else:
+    #    dataframe["Sell MACD"] = 0
 
 
     # ADX
@@ -45,14 +51,18 @@ def calculate_signals(dataframe,
     dataframe["-DI"] = adx.adx_neg()
 
     ## Evaluate ADX
-    if (dataframe["ADX"] > 25) & (dataframe["+DI"] > dataframe["-DI"]):
-        dataframe["Buy ADX"]  = 1
-    else:
-        dataframe["Buy ADX"] = 0
+    dataframe["Buy ADX"] = ((dataframe["ADX"] > 25) & (dataframe["+DI"] > dataframe["-DI"]))
+    dataframe["Sell ADX"] = ((dataframe["ADX"] > 25) & (dataframe["-DI"] > dataframe["+DI"]))
 
-    if (dataframe["ADX"] > 25) & (dataframe["-DI"] > dataframe["+DI"]):
-        dataframe["Sell ADX"]  = 1
-    else:
-        dataframe["Sell ADX"] = 0
+
+    #if (dataframe["ADX"] > 25) & (dataframe["+DI"] > dataframe["-DI"]):
+    #    dataframe["Buy ADX"]  = 1
+    #else:
+    #    dataframe["Buy ADX"] = 0
+
+    #if (dataframe["ADX"] > 25) & (dataframe["-DI"] > dataframe["+DI"]):
+    #    dataframe["Sell ADX"]  = 1
+    #else:
+    #    dataframe["Sell ADX"] = 0
 
     return dataframe
