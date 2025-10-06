@@ -27,15 +27,15 @@ def main():
         rsi_window = trial.suggest_float("rsi_window", 5, 25)
         rsi_lower = trial.suggest_float("rsi_lower", 10, 35)
         rsi_upper = trial.suggest_float("rsi_upper", 65, 90)
-        macd_window_slow = trial.suggest_int("macd_window_slow", 3, 15)
-        macd_window_fast = trial.suggest_int("macd_window_fast", 16, 25)
-        macd_window_sign = trial.suggest_int("macd_window_sign", 3, 25)
+        macd_window_slow = trial.suggest_int("macd_window_slow", 20, 365)
+        macd_window_fast = trial.suggest_int("macd_window_fast", 7, 19)
+        macd_window_sign = trial.suggest_int("macd_window_sign", 3, 15)
         adx_window = trial.suggest_int("adx_window", 7, 30)
         stop_loss = trial.suggest_float("stop_loss", .05, .20)
         take_profit = trial.suggest_float("take_profit", .05, .20)
         n_shares = trial.suggest_float("n_shares", 1, 50, step=0.1)
 
-        dataframe = download_data("Binance_BTCUSDT_1h.csv").iloc[100:300]
+        dataframe = download_data("Binance_BTCUSDT_1h.csv")
 
         dataframe = calculate_signals(dataframe=dataframe,
                                       rsi_window=rsi_window,
