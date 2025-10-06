@@ -11,12 +11,10 @@ def backtesting(dataframe, stop_loss, take_profit, n_shares):
 
     @dataclass
     class Operation:
-        time: str
         price: float
         sl: float
         tp: float
         n_shares: int
-        type: str
 
     active_long_positions = []
     active_short_positions = []
@@ -42,7 +40,7 @@ def backtesting(dataframe, stop_loss, take_profit, n_shares):
                 active_short_positions.remove(pos)
 
         # Open Long Positions
-        if row.buy_signal == 1:
+        if True == row.buy_signal:
             cost = row.Close * n_shares * (1+ COM)
 
             if cash > cost:
@@ -55,7 +53,7 @@ def backtesting(dataframe, stop_loss, take_profit, n_shares):
                                               tp = row.Close * (1 + take_profit)))
 
         # Open Short Positions
-        if row.sell_signal == 1:
+        if True == row.sell_signal:
             cost = row.Close * n_shares * (1 + COM)
 
             if cash > cost:
