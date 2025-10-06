@@ -36,4 +36,7 @@ def calculate_signals(dataframe,
     dataframe["buy_signal"] = (dataframe[['Buy RSI', 'Buy MACD', 'Buy ADX']].sum(axis=1) >= 2)
     dataframe["sell_signal"] = (dataframe[['Sell RSI', 'Sell MACD', 'Sell ADX']].sum(axis=1) >= 2)
 
+    #Dropping Nans
+    signal_cols = ["Buy RSI", "Sell RSI", "Buy MACD", "Sell MACD", "Buy ADX", "Sell ADX"]
+    dataframe[signal_cols] = dataframe[signal_cols].fillna(False)
     return dataframe

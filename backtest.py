@@ -22,6 +22,7 @@ def backtesting(dataframe, stop_loss, take_profit, n_shares):
     portfolio_historic = [cash]
 
     data = dataframe.copy()
+    #data = dataframe.dropna(subset=["Close", "buy_signal", "sell_signal"]).copy()
 
     for i, row in data.iterrows():
 
@@ -79,20 +80,20 @@ def backtesting(dataframe, stop_loss, take_profit, n_shares):
         # Add portfolio value to historic
         portfolio_historic.append(portfolio_val)
 
-    # Close all positions
+    last_close = data["Close"].iloc[-1]
 
     ## Close ALL Long Positions
     for pos in active_long_positions.copy():
-        cash += data.tail(1).Close * n_shares * (1 - COM)
+        cash += last_close * n_shares * (1 - COM)
         active_long_positions.remove(pos)
 
     ## Close ALL Short Positions
     for pos in active_short_positions.copy():
-        cash += (pos.price * pos.n_shares) + (pos.price - data.tail(1).Close) * n_shares * (1 - COM)
+        cash += (pos.price * pos.n_shares) + (pos.price - last_close) * n_shares * (1 - COM)
         active_short_positions.remove(pos)
 
-    #portfolio_val = cash
-    #portfolio_historic.append(portfolio_val)
+    portfolio_val = cash
+    portfolio_historic.append(portfolio_val)
 
     return portfolio_historic
 
