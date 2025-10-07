@@ -56,7 +56,7 @@ def main():
         mean_calmar = sum(calmars) / n_splits
 
         # Penalización para evitar overfitting
-        if mean_calmar > 2:
+        if mean_calmar > 2.5:
             penalty = (mean_calmar - 3) ** 2
             mean_calmar -= penalty
 
@@ -64,7 +64,7 @@ def main():
 
 
     study = optuna.create_study(direction="maximize", pruner=optuna.pruners.MedianPruner())
-    study.optimize(objective, n_trials=20)
+    study.optimize(objective, n_trials=10)
 
     params = study.best_trial.params
 

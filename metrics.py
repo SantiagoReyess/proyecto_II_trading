@@ -2,6 +2,36 @@ import numpy as np
 import pandas as pd
 
 def calculate_metrics(portfolio_historic):
+    """
+        Calcula métricas de desempeño financiero a partir del valor histórico de un portafolio.
+
+        Esta función estima métricas anualizadas de desempeño
+        con base en una serie temporal de valores de portafolio.
+
+        Parameters
+        ----------
+        portfolio_historic :
+            Serie temporal con los valores históricos del portafolio
+
+        Returns
+        -------
+        dict
+            Diccionario con las métricas calculadas:
+
+            - **Annualized_Return** : float
+              Retorno promedio anualizado del portafolio.
+            - **Annualized_Volatility** : float
+              Volatilidad anualizada de los rendimientos horarios.
+            - **Max_Drawdown** : float
+              Máxima caída desde un pico hasta un valle en el valor del portafolio.
+            - **Calmar_Ratio** : float
+              Relación entre el retorno anualizado y el máximo drawdown.
+            - **Sortino_Ratio** : float
+              Relación entre el retorno anualizado y la volatilidad de las pérdidas (downside risk).
+            - **Win_Rate** : float
+              Proporción de rendimientos horarios positivos.
+
+        """
 
     HOURS = 8766 # Number of hours per year
     data = pd.DataFrame()

@@ -5,6 +5,32 @@ from dataclasses import dataclass
 
 
 def backtesting(dataframe, stop_loss, take_profit, n_shares):
+    """
+        Ejecuta una simulación de backtesting basada en señales de compra y venta.
+
+        La función simula la ejecución de operaciones long y short a partir de señales
+        (`buy_signal`, `sell_signal`) en los datos, aplicando stop loss, take profit y comisión
+        por transacción.
+
+        Parameters
+        ----------
+        dataframe :
+            DataFrame con columnas:
+            - `Close`
+            - `buy_signal`
+            - `sell_signal`
+
+        - stop_loss
+        - take_profit
+        - n_shares
+
+        Returns
+        -------
+        list
+            Lista con la evolución histórica del valor del portafolio
+
+        """
+
 
     cash = 1000000
     COM =  0.125/100
@@ -22,7 +48,6 @@ def backtesting(dataframe, stop_loss, take_profit, n_shares):
     portfolio_historic = [cash]
 
     data = dataframe.copy()
-    #data = dataframe.dropna(subset=["Close", "buy_signal", "sell_signal"]).copy()
 
     for i, row in data.iterrows():
 

@@ -4,6 +4,48 @@ def calculate_signals(dataframe,
                       rsi_window, rsi_lower, rsi_upper,
                       macd_window_slow, macd_window_fast, macd_window_sign,
                       adx_window):
+    """
+    Calcula indicadores técnicos y genera señales de compra/venta basadas en RSI, MACD y ADX.
+    Luego combina los resultados para emitir señales finales de compra o venta
+
+    Parameters
+    ----------
+    dataframe :
+        DataFrame con al menos las columnas `Open`, `High`, `Low`, `Close`.
+
+    rsi_window : int
+        Número de periodos para calcular el RSI.
+    rsi_lower : float
+        Umbral inferior del RSI para generar una señal de compra (sobreventa).
+    rsi_upper : float
+        Umbral superior del RSI para generar una señal de venta (sobrecompra).
+    macd_window_slow : int
+        Ventana lenta para el cálculo del MACD.
+    macd_window_fast : int
+        Ventana rápida para el cálculo del MACD.
+    macd_window_sign : int
+        Ventana de la señal del MACD.
+    adx_window : int
+        Ventana para el cálculo del ADX.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame original con columnas adicionales:
+
+            - `RSI`: Índice de fuerza relativa.
+            - `MACD`, `MACD_Signal`, `MACD_Hist`: Componentes del MACD.
+            - `ADX`, `+DI`, `-DI`: Componentes del ADX.
+
+            - `Buy RSI`, `Sell RSI`
+            - `Buy MACD`, `Sell MACD`
+            - `Buy ADX`, `Sell ADX`
+
+            - `buy_signal`
+            - `sell_signal`
+
+    """
+
 
     dataframe = dataframe.copy()
 
